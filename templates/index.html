@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+<style>
+    /* Center the table horizontally on the page */
+    table {
+        margin: 0 auto;
+    }
+
+    /* Style for table headers */
+    th {
+        background-color: #007BFF; /* Blue header background */
+        color: white; /* White text color */
+        padding: 10px; /* Add some padding for better spacing */
+        border: 1px solid #ccc;
+    }
+
+    /* Style for table cells */
+    td {
+        padding: 8px; /* Add padding to cell content */
+        border: 1px solid #ccc; /* Add a border to cell */
+    }
+
+    /* Style for alternating rows (optional) */
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* Light gray background for even rows */
+    }
+
+    .balance {
+  position: relative;
+  top: -50px; /* Adjust this value to control the vertical position */
+  right: 600px; /* Adjust this value to control the horizontal position */
+    }
+
+</style>
+    <h2 class="balance">Balance : {{ "${:.2f}".format(balance["cash"]) }}</h2>
+    <h1>Your Stocks</h1>
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{ stock["symbol"] }}</td>
+                <td>{{ stock["quantity"] }}</td>
+                <td>{{ "{:.2f}".format(stock["price"]) }}</td>
+                <td>{{ "{:.2f}".format(stock["total"]) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

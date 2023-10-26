@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quoted
+{% endblock %}
+
+{% block main %}
+<style>
+    /* Center the table horizontally on the page */
+    table {
+        margin: 0 auto;
+    }
+
+    /* Style for table headers */
+    th {
+        background-color: #007BFF; /* Blue header background */
+        color: white; /* White text color */
+        padding: 10px; /* Add some padding for better spacing */
+        border: 1px solid #ccc;
+    }
+
+    /* Style for table cells */
+    td {
+        padding: 8px; /* Add padding to cell content */
+        border: 1px solid #ccc; /* Add a border to cell */
+    }
+
+    /* Style for alternating rows (optional) */
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* Light gray background for even rows */
+    }
+</style>
+    <h1>{{ quote["name"] }}</h1>
+    <table>
+        <tr>
+            <th>Price</th>
+            <th>Symbol</th>
+        </tr>
+        <tr>
+            <td>{{ "$"~quote["price"] }}</td>
+            <td>{{ quote["symbol"] }}</td>
+        </tr>
+    </table>
+{% endblock %}
