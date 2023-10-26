@@ -10,13 +10,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 # Application-Specific Imports
 from helpers import apology, login_required, lookup, usd
 
-# Balance retrieval
-def balance(user_id):
-    result = db.execute("SELECT cash FROM users WHERE id = :user_id;", user_id=user_id)
-
-    if result:
-        return result[0]["cash"]
-
 # Configure application
 app = Flask(__name__)
 
@@ -47,7 +40,10 @@ def index():
     user_id = session.get("user_id")
 
     # Check balance
-    balance = balance(user_id)
+    result = db.execute("SELECT cash FROM users WHERE id = :user_id;", user_id=user_id)
+
+    if result:
+        balance = result[0]["cash"]
 
     # Return stocks owned by the user
     stocks = db.execute("SELECT symbol, quantity FROM user_stocks JOIN stocks ON user_stocks.stock_id = stocks.id WHERE user_id = :user_id;", user_id=user_id)
@@ -80,7 +76,10 @@ def buy():
         current_date = datetime.date.today()
 
         user_id = session.get("user_id")
-        balance = balance(user_id)
+        result = db.execute("SELECT cash FROM users WHERE id = :user_id;", user_id=user_id)
+
+        if result:
+            balance = result[0]["cash"]
 
         # Check if user have enough cash
         if total > balance:
